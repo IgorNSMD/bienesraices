@@ -4,6 +4,7 @@ import express from 'express'
 import UserRoutes from './routes/UserRoutes.js'
 import db from './config/db.js'
 
+
 // crear la ap
 console.log("inicio proyecto...")
 
