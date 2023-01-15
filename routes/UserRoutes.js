@@ -1,11 +1,15 @@
 import express from 'express'
-import {formLogin, formRegister, formRecoverPassword} from '../controllers/UserController.js'
+import {getLogin, getRegister, postRegister, getRecoverPassword} from '../controllers/UserController.js'
 
 const router = express.Router();
 
-router.get('/login', formLogin)
-router.get('/register', formRegister )
-router.get('/recover-password', formRecoverPassword )
+router.get('/login', getLogin)
+
+router.get('/register', getRegister )
+
+router.post('/register', postRegister )
+
+router.get('/recover-password', getRecoverPassword )
 
 // router.get('/', (req,res)=>{
 //     res.send('Hola mundo en express..')

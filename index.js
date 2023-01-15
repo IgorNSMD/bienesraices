@@ -8,9 +8,14 @@ import db from './config/db.js'
 console.log("inicio proyecto...")
 
 const app = express()
+
+//habilitar lectura de datos de formularios...
+app.use( express.urlencoded({extended:true}) )
+
 //conexión a la la bd
 try {
     await db.authenticate();
+    db.sync();
     console.log('conexión correcta a la bd...')
 } catch (error) {
     console.log(error)
