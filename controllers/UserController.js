@@ -2,7 +2,7 @@ import { check, validationResult } from 'express-validator'
 
 import User from '../model/User.js'
 import { generateId } from '../helpers/token.js'
-
+import { emailRegister } from '../helpers/emails.js'
 
 const getLogin =(req,res) =>{
     res.render('auth/login',{
@@ -73,15 +73,22 @@ const postRegister =async(req,res) =>{
     })
     }
 
+    // Envia correo de confirmación 
 
     // Almacenar un usuario
-    await User.create({
+    const user =  await User.create({
         name, email, password,
         token: generateId()
     })
 
-    // Mostrar mensaje de confirmación
-    res.render('templates/message',{
+    // Envia correo con mensaje de confirmación
+    emailRegister({
+        name: user.name,
+        email: user.email,
+        token: user.token
+    })
+
+    res.render('template/message',{
         pageLabel: 'Cuenta Creada Correctamente...',
         message: 'Enviamos un correo de confirmación, presiona en el enlace...'
     })
@@ -95,6 +102,43 @@ const postRegister =async(req,res) =>{
     // res.json(user)
 }
 
+// Funcion que comprueba una cuenta
+const getConfirm = async(req, res) =>{
+    
+    const { token } = req.params
+
+
+    // console.log( token )
+
+    // verificar si el token es válido
+    const user = await User.findOne( { where: { token } } )
+
+    
+    if(!user){
+        return res.render('auth/confirm-account',{
+            pageLabel: 'Error confirmar cuenta...',
+            message: 'Hubo un error al confirmar tu cuenta, intenta de nuevo',
+            error: true        
+        })
+    }
+
+    // confirmar la cuenta
+    user.token = null
+    user.confirmed = true
+    await user.save();
+
+    res.render('auth/confirm-account',{
+        pageLabel: 'Cuenta confirmada',
+        message: 'La cuenta se confirmó correctamente...'
+    })    
+
+    console.log( user )
+    
+}
+
+
+
+
 const getRecoverPassword =(req,res) =>{
     res.render('auth/recover-password',{
         authenticated: false,
@@ -106,6 +150,7 @@ export {
     getLogin,
     getRegister,
     postRegister,
+    getConfirm,
     getRecoverPassword,
 
 }

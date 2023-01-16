@@ -1,5 +1,5 @@
 import express from 'express'
-import {getLogin, getRegister, postRegister, getRecoverPassword} from '../controllers/UserController.js'
+import {getLogin, getRegister, postRegister, getConfirm, getRecoverPassword} from '../controllers/UserController.js'
 
 const router = express.Router();
 
@@ -8,6 +8,8 @@ router.get('/login', getLogin)
 router.get('/register', getRegister )
 
 router.post('/register', postRegister )
+
+router.get('/confirm/:token', getConfirm)
 
 router.get('/recover-password', getRecoverPassword )
 
