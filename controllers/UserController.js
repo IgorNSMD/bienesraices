@@ -142,15 +142,49 @@ const getConfirm = async(req, res) =>{
     
 }
 
-
-
-
 const getRecoverPassword =(req,res) =>{
     res.render('auth/recover-password',{
         authenticated: false,
+        csrfToken: req.csrfToken(),
         pageLabel: 'Recuperar Contraseña'
     })
 }
+
+const postResetPassword = async(req,res)=>{
+
+    // Validaciones
+    await check('email').isEmail().withMessage('Ingrese Email correctamente..').run(req)
+
+    let result = validationResult(req)
+
+    // verificar result esté vacio
+    if(!result.isEmpty()){
+        //Existen errores...
+        return res.render('auth/recover-password',{
+            csrfToken: req.csrfToken(),
+            pageLabel: 'Recuperar Contraseña',
+            errors: result.array()
+        })
+    }
+
+    // Buscar usuario
+    const { email } = req.body
+    const user = await User.findOne({where: { email }})
+    
+    //console.log(user)
+
+    if (!user){
+        return res.render('auth/recover-password',{
+            csrfToken: req.csrfToken(),
+            pageLabel: 'Recuperar Contraseña',
+            errors: [{msg: 'El email no pertenece a ningún usuario..'}]
+        })       
+    }
+
+    // Generar token y enviar email
+
+}
+
 
 export {
     getLogin,
@@ -158,5 +192,5 @@ export {
     postRegister,
     getConfirm,
     getRecoverPassword,
-
+    postResetPassword
 }
