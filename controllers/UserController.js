@@ -12,9 +12,13 @@ const getLogin =(req,res) =>{
 }
 
 const getRegister =(req,res) =>{
+
+    //console.log( req.csrfToken() )
+
     res.render('auth/register',{
         authenticated: false,
-        pageLabel: 'Crear Cuenta'
+        pageLabel: 'Crear Cuenta',
+        csrfToken: req.csrfToken()
     })
 }
 
@@ -49,6 +53,7 @@ const postRegister =async(req,res) =>{
         return res.render('auth/register',{
                 authenticated: false,
                 pageLabel: 'Crear Cuenta',
+                csrfToken: req.csrfToken(),
                 errors: result.array(),
                 user: {
                     name:req.body.name,
@@ -65,6 +70,7 @@ const postRegister =async(req,res) =>{
         return res.render('auth/register',{
             authenticated: false,
             pageLabel: 'Crear Cuenta',
+            csrfToken: req.csrfToken(),
             errors: [{msg:'El Usuario ya está registrado'}],
             user: {
                 name: name,
