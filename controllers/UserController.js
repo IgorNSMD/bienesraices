@@ -1,4 +1,5 @@
 import { check, validationResult } from 'express-validator'
+import bcrypt from 'bcrypt'
 
 import User from '../model/User.js'
 import { generateId } from '../helpers/token.js'
@@ -225,8 +226,43 @@ const getCheckToken = async(req,res) => {
  
 }
 
-const postNewPassword = (req,res) => {
-    console.log('Grabando password...')
+const postNewPassword = async(req,res) => {
+
+   // Validar la nueva password
+    await check('password').isLength({min:6}).withMessage('Ingrese Contraseña correctamente..').run(req)
+
+
+    let result = validationResult(req)
+    // verificar result esté vacio
+    if(!result.isEmpty()){
+        //Existen errores...
+        return res.render('auth/reset-password',{
+                authenticated: false,
+                pageLabel: 'Reestablecer contraseña',
+                csrfToken: req.csrfToken(),
+                errors: result.array(),
+        })
+    }
+
+    const { token } = req.params
+    const { password } = req.body
+
+   // identificar quien hace el cambio
+    const user = await User.findOne({where: {token}})
+    console.log(user)
+
+   //hashear el nuevo password
+    const salt = await bcrypt.genSalt(10)
+    user.password = await bcrypt.hash( password, salt )   
+    user.token = null
+
+    await user.save()
+
+    res.render('auth/confirm-account',{
+        pageLabel: 'Contraseña Reestablecida',
+        message: 'Contraseña se grabó correctamente..'
+    })
+
 }
 
 export {
