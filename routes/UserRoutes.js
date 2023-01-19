@@ -1,10 +1,11 @@
 import express from 'express'
-import {getLogin, getRegister, postRegister, getConfirm, getRecoverPassword, postResetPassword,
+import {getLogin, postAuthenticate, getRegister, postRegister, getConfirm, getRecoverPassword, postResetPassword,
         getCheckToken, postNewPassword} from '../controllers/UserController.js'
 
 const router = express.Router();
 
 router.get('/login', getLogin)
+router.post('/login', postAuthenticate)
 
 router.get('/register', getRegister )
 
