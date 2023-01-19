@@ -2,7 +2,7 @@ import { check, validationResult } from 'express-validator'
 
 import User from '../model/User.js'
 import { generateId } from '../helpers/token.js'
-import { emailRegister } from '../helpers/emails.js'
+import { emailRegister, emailRecoverPassword } from '../helpers/emails.js'
 
 const getLogin =(req,res) =>{
     res.render('auth/login',{
@@ -182,9 +182,52 @@ const postResetPassword = async(req,res)=>{
     }
 
     // Generar token y enviar email
+    user.token = generateId()
+    await user.save();
+
+    // Enviar correo
+    emailRecoverPassword({
+        email: user.email,
+        name: user.name,
+        token: user.token
+    })
+
+    // Renderizar un mensaje
+    res.render('template/message',{
+        pageLabel: 'Reestablecer tu password',
+        message: 'Enviamos un correo con las instrucciones'
+    })
 
 }
 
+
+const getCheckToken = async(req,res) => {
+
+    //console.log('getCheckToken...')
+    
+    const { token } = req.params
+
+    const user = await User.findOne({where: {token}})
+    
+    if(!user){
+        return res.render('auth/confirm-account',{
+            pageLabel: 'Reestablece tu contraseña...',
+            message: 'Hubo un error al validar tu contraseña, intenta de nuevo',
+            error: true        
+        })
+    }
+
+    // Mostrar formulario para modificar password
+    res.render('auth/reset-password',{
+        pageLabel: ' Reestablecer tu contraseña',
+        csrfToken: req.csrfToken(),
+    })
+ 
+}
+
+const postNewPassword = (req,res) => {
+    console.log('Grabando password...')
+}
 
 export {
     getLogin,
@@ -192,5 +235,7 @@ export {
     postRegister,
     getConfirm,
     getRecoverPassword,
-    postResetPassword
+    postResetPassword,
+    getCheckToken,
+    postNewPassword
 }
