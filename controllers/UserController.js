@@ -8,8 +8,68 @@ import { emailRegister, emailRecoverPassword } from '../helpers/emails.js'
 const getLogin =(req,res) =>{
     res.render('auth/login',{
         authenticated: true,
-        pageLabel: 'Iniciar Sesión'
+        pageLabel: 'Iniciar Sesión',
+        csrfToken: req.csrfToken(),
     })
+}
+
+const postAuthenticate = async(req,res) => {
+    //console.log('autenticando....')
+    //validación
+    await check('email').isEmail().withMessage('Correo es obligatorio..').run(req)
+    await check('password').notEmpty().withMessage('Contraseña es obligatorio..').run(req)
+
+    let result = validationResult(req)
+    //console.log(result)
+    //return;
+
+    // verificar result esté vacio
+    if(!result.isEmpty()){
+        //Existen errores...
+        return res.render('auth/login',{
+                authenticated: false,
+                pageLabel: 'Iniciar sesión',
+                csrfToken: req.csrfToken(),
+                errors: result.array(),
+        })
+    }
+
+    const {email, password} = req.body
+
+    // Comprobar si el usuario existe...
+    const user = await User.findOne({ where: {email}})
+    if (!user){
+        return res.render('auth/login',{
+            authenticated: false,
+            pageLabel: 'Iniciar sesión',
+            csrfToken: req.csrfToken(),
+            errors: [{msg:'El usuario no es válido..'}]
+        })       
+    }
+
+    // Comprobar si el usuario está confirmado...
+    if(!user.confirmed){
+        return res.render('auth/login',{
+            authenticated: false,
+            pageLabel: 'Iniciar sesión',
+            csrfToken: req.csrfToken(),
+            errors: [{msg:'El usuario no está confirmado..'}]
+        })     
+    }
+
+    // Revisar el password..
+    if(!user.VerifyPassword(password)){
+        return res.render('auth/login',{
+            authenticated: false,
+            pageLabel: 'Iniciar sesión',
+            csrfToken: req.csrfToken(),
+            errors: [{msg:'La contraseña no coincide..'}]
+        })            
+    }
+
+    // Autenticar al usuario
+    
+
 }
 
 const getRegister =(req,res) =>{
@@ -267,6 +327,7 @@ const postNewPassword = async(req,res) => {
 
 export {
     getLogin,
+    postAuthenticate,
     getRegister,
     postRegister,
     getConfirm,
