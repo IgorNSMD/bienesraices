@@ -1,8 +1,9 @@
 import { check, validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
 
+
 import User from '../model/User.js'
-import { generateId } from '../helpers/token.js'
+import { generateId,generateToken } from '../helpers/token.js'
 import { emailRegister, emailRecoverPassword } from '../helpers/emails.js'
 
 const getLogin =(req,res) =>{
@@ -68,8 +69,14 @@ const postAuthenticate = async(req,res) => {
     }
 
     // Autenticar al usuario
-    
+    const token = generateToken(user.id)
 
+    console.log(token)
+
+    return res.cookie('_token', token, {
+        httpOnly: true,
+        //secure: true
+    }).redirect('my-properties')
 }
 
 const getRegister =(req,res) =>{
