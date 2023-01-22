@@ -16,7 +16,7 @@
   \***********************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\nalert('es el mapa...33')\n\n//# sourceURL=webpack://bienesraices/./src/js/map.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n(function() {\r\n\r\n    //https://www.google.cl/maps/@-32.967291,-71.5440427,15z\r\n\r\n    const lat = -33.4525756; // 20.67444163271174;\r\n    const lng = -70.6184675; // -103.38739216304566;\r\n    const map = L.map('map').setView([lat, lng ], 16);\r\n    \r\n    let marker;\r\n\r\n    // Utilizar provider y Geocoder\r\n    const geocodeService = L.esri.Geocoding.geocodeService()\r\n\r\n\r\n    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\r\n        attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'\r\n    }).addTo(map);\r\n\r\n    // el Pin\r\n    marker = new L.marker([lat,lng],{\r\n        draggable: true,\r\n        autoPan: true\r\n    }).addTo(map)\r\n\r\n    // Detectar el movimiento del ping\r\n    marker.on('moveend', function(e){\r\n        marker = e.target\r\n\r\n        //console.log(marker)\r\n\r\n        const position = marker.getLatLng();\r\n\r\n        //console.log(position)\r\n\r\n        map.panTo(new L.LatLng(position.lat, position.lng))\r\n\r\n        // Obtener la información de las calles al soltar el ping\r\n\r\n        geocodeService.reverse().latlng(position,16).run(function(error,result){\r\n            //console.log(result)\r\n            marker.bindPopup(result.address.LongLabel)\r\n        })\r\n\r\n    })\r\n\r\n})()\n\n//# sourceURL=webpack://bienesraices/./src/js/map.js?");
 
 /***/ })
 
