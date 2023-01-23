@@ -39,6 +39,13 @@
         geocodeService.reverse().latlng(position,16).run(function(error,result){
             //console.log(result)
             marker.bindPopup(result.address.LongLabel)
+
+            //Llenar los campos
+            document.querySelector('.street').textContent = result?.address?.Address ?? '';
+            document.querySelector('#street').value = result?.address?.Address ?? '';
+            document.querySelector('#lat').value = result?.latlng?.lat ?? '';
+            document.querySelector('#lng').value = result?.latlng?.lng ?? '';
+
         })
 
     })
