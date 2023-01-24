@@ -2,8 +2,8 @@
 
     //https://www.google.cl/maps/@-32.967291,-71.5440427,15z
 
-    const lat = -33.4525756; // 20.67444163271174;
-    const lng = -70.6184675; // -103.38739216304566;
+    const lat = document.querySelector('#lat').value || -33.4525756; // 20.67444163271174;
+    const lng = document.querySelector('#lng').value || -70.6184675; // -103.38739216304566;
     const map = L.map('map').setView([lat, lng ], 16);
     
     let marker;

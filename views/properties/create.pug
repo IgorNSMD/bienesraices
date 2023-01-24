@@ -94,11 +94,11 @@ block content
                         #map.h-96    
 
                         div 
-                            p.street
+                            p.street= info.street ? info.street : ''
 
-                        input(type="hidden" name="street" id="street")
-                        input(type="hidden" name="lat" id="lat")
-                        input(type="hidden" name="lng" id="lng")
+                        input(type="hidden" name="street" id="street" value= info.street ? info.street : '')
+                        input(type="hidden" name="lat" id="lat" value= info.lat ? info.lat : '')
+                        input(type="hidden" name="lng" id="lng" value= info.lng ? info.lng : '')
 
                     input(class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 round text-white font-bold uppercase cursor-pointer" 
                           type="submit"
