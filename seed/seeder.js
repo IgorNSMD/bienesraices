@@ -3,10 +3,11 @@ import { exit } from 'node:process'
 import categories from './categories.js';
 import prices from './prices.js';
 
-import Category from '../model/Category.js';
-import Price from '../model/Price.js';
+// import Category from '../model/Category.js';
+// import Price from '../model/Price.js';
 
 import db from '../config/db.js'
+import { Category,Price } from '../model/index.js'
 
 const importData = async() => {
     try {
@@ -41,12 +42,13 @@ const importData = async() => {
 const deleteData = async() => {
     try {
 
-        await Promise.all([
-            Category.destroy({where:{}, truncate:true}),
-            Price.destroy({where:{}, truncate:true})
-        ])
+        //- Elimina datos de las tablas
+        // await Promise.all([
+        //     Category.destroy({where:{}, truncate:true}),
+        //     Price.destroy({where:{}, truncate:true})
+        // ])
 
-        //await db.sync({force:true}) - Elimina las tablas y datos
+        await db.sync({force:true}) //- Elimina las tablas, datos y los recrea nuevamente
         
         console.log('Datos eliminados correctamente..')
         exit(0);
