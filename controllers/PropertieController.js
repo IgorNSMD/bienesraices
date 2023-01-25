@@ -7,8 +7,7 @@ import { Price,Category, Property } from '../model/index.js'
 
 const admin = (req,res) => {
     res.render('properties/admin',{
-        pageLabel: 'Mis propiedades',
-        barra:true
+        pageLabel: 'Mis propiedades'
     })
 }
 
@@ -23,7 +22,6 @@ const create = async (req,res) => {
 
     res.render('properties/create',{
         pageLabel: 'Crear propiedad',
-        barra:true,
         categories,
         prices,
         csrfToken: req.csrfToken(),
@@ -48,7 +46,6 @@ const save = async(req,res) => {
         //Existen errores...
         return res.render('properties/create',{
         pageLabel: 'Crear propiedad',
-        barra:true,
         csrfToken: req.csrfToken(),
         categories,
         prices,
@@ -91,8 +88,16 @@ const save = async(req,res) => {
 
 }
 
+const addImage = async(req,res) => {
+    //res.send('Add image...')
+    res.render('properties/add-image',{
+        pageLabel:'Agregar Imagen'
+    })
+}
+
 export {
     admin,
     create,
-    save
+    save,
+    addImage
 }
