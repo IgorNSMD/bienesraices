@@ -76,7 +76,7 @@ const postAuthenticate = async(req,res) => {
     return res.cookie('_token', token, {
         httpOnly: true,
         //secure: true
-    }).redirect('my-properties')
+    }).redirect('/my-properties')
 }
 
 const getRegister =(req,res) =>{
