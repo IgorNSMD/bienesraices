@@ -3,13 +3,16 @@ import express from 'express'
 import { body } from 'express-validator'
 
 import { admin,create,save } from '../controllers/PropertieController.js'
+import protectRoute from '../middleware/protectRoute.js';
+
+
 
 const router = express.Router();
 
-router.get('/my-properties', admin)
-router.get('/properties/create', create)
+router.get('/my-properties', protectRoute, admin)
+router.get('/properties/create', protectRoute, create)
 
-router.post('/properties/create', 
+router.post('/properties/create', protectRoute, 
     body('title').notEmpty().withMessage('El título del anuncio es obligatorio'),
     body('description')
         .notEmpty().withMessage('El campo descripción es obligatorio')
@@ -23,5 +26,5 @@ router.post('/properties/create',
     save
     )
 
-router.delete('/properties/:id', create)
+router.delete('/properties/:id', protectRoute, create)
 export default router
