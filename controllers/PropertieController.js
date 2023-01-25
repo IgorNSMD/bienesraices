@@ -61,7 +61,10 @@ const save = async(req,res) => {
 
     const { title,description, bedrooms, parking, toilets, street, lat, lng, category, price } = req.body
 
-    console.log(req.body)
+    //console.log(req.body)
+    //console.log(req.user)
+    const { id: userid } = req.user
+
     try {
 
         const property = await Property.create({
@@ -70,9 +73,17 @@ const save = async(req,res) => {
             bedrooms, parking, toilets,
             street, lat, lng, 
             categoryid: category, 
-            precioid: price 
+            precioid: price,
+            userid,
+            picture:''
 
         })
+
+        const { id } = property
+
+        res.redirect(`/properties/add-image/${ id }`)
+
+
 
     } catch (error) {
         console.log(error)

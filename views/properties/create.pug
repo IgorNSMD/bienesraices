@@ -40,8 +40,7 @@ block content
 
                         div(class="md:w-1/2")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="category") Categoria
-                            select#category.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400
-                            (name="category")
+                            select#category.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400(name="category")
                                 option(value="") - Seleccione -
                                 each category in categories
                                     option(value=category.id 
@@ -50,8 +49,7 @@ block content
 
                         div(class="md:w-1/2")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="price") Precio
-                            select#price.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400
-                            (name="price")
+                            select#price.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400(name="price")
                                 option(value="") - Seleccione -
                                 each price in prices
                                     option(value=price.id 
@@ -62,8 +60,7 @@ block content
 
                         div(class="md:w-1/3")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="bedrooms") Habitaciones
-                            select#bedrooms.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400
-                            (name="bedrooms")
+                            select#bedrooms.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400(name="bedrooms")
                                 option(value="") - Seleccione -
                                 - var n = 1;
                                     while n < 5
@@ -73,8 +70,7 @@ block content
 
                         div(class="md:w-1/3")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="parking") Estacionamientos
-                            select#parking.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400
-                            (name="parking")
+                            select#parking.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400(name="parking")
                                 option(value="") - Seleccione -
                                 - var n = 1;
                                     while n < 4
@@ -84,8 +80,7 @@ block content
 
                         div(class="md:w-1/3")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="toilets") Baños
-                            select#toilets.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400
-                            (name="toilets")
+                            select#toilets.w-full.px-3-py-2.border.rounded-md.placeholder-gray-400(name="toilets")
                                 option(value="") - Seleccione -
                                 - var n = 1;
                                     while n < 5
