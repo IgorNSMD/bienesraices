@@ -117,6 +117,7 @@ const addImage = async(req,res) => {
 
     res.render('properties/add-image',{
         pageLabel:`Agregar Imagen: ${ property.title }`,
+        csrfToken: req.csrfToken(),        
         property
     })
 }
