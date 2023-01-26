@@ -123,7 +123,7 @@ const addImage = async(req,res) => {
 }
 
 
-const saveFile = async(req,res) =>{
+const saveFile = async( req, res, next ) =>{
 
     const { id } = req.params
 
@@ -155,6 +155,8 @@ const saveFile = async(req,res) =>{
         property.published = 1
 
         await property.save()
+
+        next()
 
     } catch (error) {
         console.log(error)

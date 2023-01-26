@@ -15,9 +15,8 @@ block content
                  method="POST" action=`/properties/add-image/${ property.id }`)
                 input(type="hidden" name="_csrf" value= csrfToken )
 
-            input(class="mt-5 w-full py-3 bg-indigo-600 hover:bg-indigo-700 round text-white font-bold uppercase cursor-pointer" 
-                    type="submit"
-                    value="Publicar Propiedad")
+            button(id="post" class="mt-5 w-full py-3 bg-indigo-600 hover:bg-indigo-700 round text-white font-bold uppercase cursor-pointer" 
+                    type="button" ) Publicar Propiedad
 
 block scripts
     script(src="/js/addimage.js")
