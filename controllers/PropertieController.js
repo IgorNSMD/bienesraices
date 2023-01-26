@@ -90,8 +90,34 @@ const save = async(req,res) => {
 
 const addImage = async(req,res) => {
     //res.send('Add image...')
+
+    const { id } = req.params
+
+    // Validar que la propuiedad exista
+    const property = await Property.findByPk(id)
+    if(!property){
+        return res.redirect('/my-properties')
+    }
+
+    // Validar que la propiedad esté publicada
+    if(property.published){
+        return res.redirect('/my-properties')
+    }
+
+
+    // Validar que la propiedad pertenece a quien visita esta página
+    // console.log(req.user.id)
+    
+    // console.log(property.userid)
+
+    if(req.user.id.toString() !== property.userid.toString()){
+        return res.redirect('/my-properties')
+    }
+
+
     res.render('properties/add-image',{
-        pageLabel:'Agregar Imagen'
+        pageLabel:`Agregar Imagen: ${ property.title }`,
+        property
     })
 }
 
