@@ -3,8 +3,9 @@ import express from 'express'
 import { body } from 'express-validator'
 
 import { admin,create,save,addImage } from '../controllers/PropertieController.js'
-import protectRoute from '../middleware/protectRoute.js';
 
+import protectRoute from '../middleware/protectRoute.js';
+import fileUpload from '../middleware/fileUpload.js'
 
 
 const router = express.Router();
@@ -28,9 +29,7 @@ router.post('/properties/create', protectRoute,
 
 router.get('/properties/add-image/:id',  protectRoute, addImage)
 
-router.post('/properties/add-image/:id',  (req,res) => {
-    console.log('subiendo imagen')
-})
+router.post('/properties/add-image/:id', protectRoute, fileUpload.single('image') )
 
 router.delete('/properties/:id', protectRoute, create)
 export default router
