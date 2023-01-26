@@ -122,9 +122,50 @@ const addImage = async(req,res) => {
     })
 }
 
+
+const saveFile = async(req,res) =>{
+
+    const { id } = req.params
+
+    // Validar que la propuiedad exista
+    const property = await Property.findByPk(id)
+    if(!property){
+        return res.redirect('/my-properties')
+    }
+
+    // Validar que la propiedad esté publicada
+    if(property.published){
+        return res.redirect('/my-properties')
+    }
+
+
+    // Validar que la propiedad pertenece a quien visita esta página
+
+
+    if(req.user.id.toString() !== property.userid.toString()){
+        return res.redirect('/my-properties')
+    }
+
+    try {
+        console.log(req.file)
+
+
+        // almacenar imagen y publicar propiedad
+        property.picture = req.file.filename
+        property.published = 1
+
+        await property.save()
+
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
+
 export {
     admin,
     create,
     save,
-    addImage
+    addImage,
+    saveFile
 }
