@@ -180,10 +180,42 @@ const saveFile = async( req, res, next ) =>{
     }
 }
 
+const edit = async(req,res) =>{
+
+    const { id } = req.params
+
+    // Validar que propiedad exista
+    const property = await Property.findByPk( id )
+
+    if(!property){
+        return res.redirect('/my-properties')
+    }
+
+    // Revisar quien visita la URL es el creó la propiedad
+    if(property.userid.toString() !== req.user.id.toString()){
+        return res.redirect('/my-properties')
+    }
+
+    // Modelo de precios y categorias
+    const [ categories, prices ] = await Promise.all([
+        Category.findAll(),
+        Price.findAll()
+    ])
+
+    res.render('properties/edit',{
+        pageLabel: 'Editar propiedad',
+        categories,
+        prices,
+        csrfToken: req.csrfToken(),
+        info:{}
+    })
+}
+
 export {
     admin,
     create,
     save,
     addImage,
-    saveFile
+    saveFile,
+    edit
 }
