@@ -5,9 +5,20 @@ import { Price,Category, Property } from '../model/index.js'
 // import Price from '../model/Price.js'
 // import Category from '../model/Category.js'
 
-const admin = (req,res) => {
+const admin = async(req,res) => {
+    
+    const { id } = req.user
+    
+    console.log( id )
+    const properties = await Property.findAll({
+        where: {
+            userid:id
+        }
+    })
+
     res.render('properties/admin',{
-        pageLabel: 'Mis propiedades'
+        pageLabel: 'Mis propiedades',
+        properties
     })
 }
 

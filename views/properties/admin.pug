@@ -7,3 +7,24 @@ block content
         h2.text-center.text-2xl.font-extrabold=pageLabel
 
         a(href="/properties/create" class="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white uppercase my-5 block w-full sm:w-auto") Publicar Propiedad
+
+        //properties= JSON.stringify(properties, undefined, 2)
+
+        if properties.length
+            div(class="bg-white shadow rounded-lg")
+                ul(class="divide-y divide-gray-200")
+                    each property in properties 
+                        li
+                            div(class="p-6 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-8 gap-4")
+                                div(class="sm:w-1/4 md:w-1/6 ") 
+                                    img(src=`uploads/${ property.picture }`, 
+                                        alt=`Imagen de la propiedad ${ property.title }` 
+                                        class="w-full block"
+                                        )
+                                div(class="sm:w-2/4 md:w-3/6 lg:w-4/6 ") 
+                                    a(class="block text-2xL font-extrabold text-indigo-600 truncate" href="#")= property.title
+                                    p(class="text-sm text-black font-bold")= property.categoryid
+
+                                div(class="sm:w-1/4 md:w-2/6 lg:w-1/6 ") 3
+        else 
+            p.text-center No hay propiedades
