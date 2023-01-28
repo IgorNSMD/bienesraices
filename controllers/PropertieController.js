@@ -86,7 +86,7 @@ const save = async(req,res) => {
             bedrooms, parking, toilets,
             street, lat, lng, 
             categoryid: category, 
-            precioid: price,
+            priceid: price,
             userid,
             picture:''
 
@@ -203,7 +203,7 @@ const edit = async(req,res) =>{
     ])
 
     res.render('properties/edit',{
-        pageLabel: 'Editar propiedad',
+        pageLabel: `Editar propiedad: ${ property.title }`,
         categories,
         prices,
         csrfToken: req.csrfToken(),
@@ -211,11 +211,80 @@ const edit = async(req,res) =>{
     })
 }
 
+const saveChange = async(req,res) => {
+
+    // console.log('Guardar Cambios.....')
+
+    // Verificar la validación
+
+    let result = validationResult(req)
+
+    // verificar result esté vacio
+    if(!result.isEmpty()){
+        // Modelo de precios y categorias
+        const [ categories, prices ] = await Promise.all([
+            Category.findAll(),
+            Price.findAll()
+        ])        
+
+        //Existen errores...
+         return res.render('properties/edit',{
+            pageLabel: `Editar propiedad`,
+            csrfToken: req.csrfToken(),            
+            categories,
+            prices,
+            errors: result.array(),
+            info: req.body
+        })         
+         
+    }
+
+
+
+    const { id } = req.params
+
+    // Validar que propiedad exista
+    const property = await Property.findByPk( id )
+
+    if(!property){
+        return res.redirect('/my-properties')
+    }
+
+    // Revisar quien visita la URL es el creó la propiedad
+    if(property.userid.toString() !== req.user.id.toString()){
+        return res.redirect('/my-properties')
+    }    
+
+    // Reescribir el registro al actualizarlo
+    try {
+       // console.log(property)
+       const { title,description, bedrooms, parking, toilets, street, lat, lng, category, price } = req.body
+    
+       property.set({
+            title,
+            description,
+            bedrooms, parking, toilets,
+            street, lat, lng, 
+            categoryid: category, 
+            priceid: price 
+       })
+
+       await property.save()
+
+       res.redirect('/my-properties')
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 export {
     admin,
     create,
     save,
     addImage,
     saveFile,
-    edit
+    edit,
+    saveChange
 }
