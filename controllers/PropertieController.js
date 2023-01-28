@@ -8,6 +8,9 @@ import { Price,Category, Property } from '../model/index.js'
 
 const admin = async(req,res) => {
     
+    // Query String
+    console.log(req.query)
+
     const { id } = req.user
     
     console.log( id )
