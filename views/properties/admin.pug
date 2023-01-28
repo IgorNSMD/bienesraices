@@ -22,7 +22,7 @@ block content
                                         class="w-full block"
                                         )
                                 div(class="sm:w-2/4 md:w-3/6 lg:w-4/6 ") 
-                                    a(class="block text-2xL font-extrabold text-indigo-600 truncate" href="#")= property.title
+                                    a(class="block text-2xL font-extrabold text-indigo-600 truncate" href=`/property/${ property.id }`)= property.title
                                     p(class="text-sm text-black font-bold")= property.category.name
                                     p(class="text-sm text-gray-500 font-bold flex items-center")
                                         svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6")

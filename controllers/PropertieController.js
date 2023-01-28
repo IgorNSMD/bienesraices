@@ -282,7 +282,7 @@ const saveChange = async(req,res) => {
 
 const remove = async(req,res) => {
 
-    console.log('inicio eliminacion registro..')
+    //console.log('inicio eliminacion registro..')
 
     const { id } = req.params
 
@@ -313,6 +313,32 @@ const remove = async(req,res) => {
     
 }
 
+const showProperty = async(req,res) => {
+    //res.send('mostrando titulo...')
+
+    const { id } = req.params
+
+    // Validar que la propuiedad exista
+    const property = await Property.findByPk(id, {
+        include: [
+            { model: Category, as: 'category' },
+            { model: Price, as: 'price' }
+        ]       
+    })
+    
+    if(!property){
+        return res.redirect('/404')
+    }
+
+
+    res.render('properties/showProperty',{
+        property,
+        pageLabel: property.title,
+    })
+
+
+}
+
 export {
     admin,
     create,
@@ -321,5 +347,6 @@ export {
     saveFile,
     edit,
     saveChange,
-    remove
+    remove,
+    showProperty
 }
