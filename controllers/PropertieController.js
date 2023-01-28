@@ -207,7 +207,7 @@ const edit = async(req,res) =>{
         categories,
         prices,
         csrfToken: req.csrfToken(),
-        info:{}
+        info: property
     })
 }
 
