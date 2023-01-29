@@ -13,7 +13,7 @@ const admin = async(req,res) => {
     
     // Leer Query String -- alt + 94 es ^
     const { page:actualPage } = req.query
-    const expression = /^[0-9]$/
+    const expression = /^[1-9]$/
     if(!expression.test(actualPage)){
         return res.redirect('/my-properties?page=1')
     }
@@ -54,7 +54,7 @@ const admin = async(req,res) => {
             properties,
             csrfToken: req.csrfToken(),
             pages: Math.ceil(total / limit),
-            actualPage,
+            actualPage: Number(actualPage),
             total,
             offset,
             limit
