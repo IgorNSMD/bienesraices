@@ -23,7 +23,7 @@ const admin = async(req,res) => {
         const { id } = req.user
         
         // Limites y offset para el paginador
-        const limit = 10
+        const limit = 5
         const offset = ((actualPage * limit) - limit)
 
         console.log( id )
@@ -53,7 +53,8 @@ const admin = async(req,res) => {
             pageLabel: 'Mis propiedades',
             properties,
             csrfToken: req.csrfToken(),
-            pages: Math.ceil(total / limit)
+            pages: Math.ceil(total / limit),
+            actualPage
         })
 
     } catch (error) {
