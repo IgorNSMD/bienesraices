@@ -8,28 +8,49 @@ import { Price,Category, Property } from '../model/index.js'
 
 const admin = async(req,res) => {
     
-    // Query String
-    console.log(req.query)
-
-    const { id } = req.user
     
-    console.log( id )
-    const properties = await Property.findAll({
-        where: {
-            userid:id
-        }
-        ,
-        include: [
-            { model: Category, as: 'category' },
-            { model: Price, as: 'price' }
-        ]
-    })
+    //console.log(req.query)
+    
+    // Leer Query String -- alt + 94 es ^
+    const { page:actualPage } = req.query
+    const expression = /^[0-9]$/
+    if(!expression.test(actualPage)){
+        return res.redirect('/my-properties?page=1')
+    }
 
-    res.render('properties/admin',{
-        pageLabel: 'Mis propiedades',
-        properties,
-        csrfToken: req.csrfToken(),
-    })
+    try {
+
+        const { id } = req.user
+        
+        // Limites y offset para el paginador
+        const limit = 10
+        const offset = ((actualPage * limit) - limit)
+
+        console.log( id )
+        const properties = await Property.findAll({
+            limit: limit,
+            offset: offset,
+            where: {
+                userid:id
+            }
+            ,
+            include: [
+                { model: Category, as: 'category' },
+                { model: Price, as: 'price' }
+            ]
+        })
+    
+        res.render('properties/admin',{
+            pageLabel: 'Mis propiedades',
+            properties,
+            csrfToken: req.csrfToken(),
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+
+
 }
 
 // Formulario para crear nueva propiedad
