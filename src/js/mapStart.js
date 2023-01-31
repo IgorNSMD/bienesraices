@@ -9,4 +9,20 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);    
 
+    const getProperties = async(req,res) => {
+        try {
+
+            const url = '/api/properties'
+            const response = await fetch(url)
+            const properties = await response.json()
+
+            console.log(properties)
+            
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    getProperties()
 })()

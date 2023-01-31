@@ -16,7 +16,7 @@
   \****************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n(function(){\r\n    //https://www.google.cl/maps/@-32.967291,-71.5440427,15z\r\n\r\n    const lat = -33.4525756; // 20.67444163271174;\r\n    const lng = -70.6184675; // -103.38739216304566;\r\n    const map = L.map('map-start').setView([lat, lng ], 16);\r\n\r\n    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\r\n        attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'\r\n    }).addTo(map);    \r\n\r\n})()\n\n//# sourceURL=webpack://bienesraices/./src/js/mapStart.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n(function(){\r\n    //https://www.google.cl/maps/@-32.967291,-71.5440427,15z\r\n\r\n    const lat = -33.4525756; // 20.67444163271174;\r\n    const lng = -70.6184675; // -103.38739216304566;\r\n    const map = L.map('map-start').setView([lat, lng ], 16);\r\n\r\n    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\r\n        attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'\r\n    }).addTo(map);    \r\n\r\n    const getProperties = async(req,res) => {\r\n        try {\r\n\r\n            const url = '/api/properties'\r\n            const response = await fetch(url)\r\n            const properties = await response.json()\r\n\r\n            console.log(properties)\r\n            \r\n\r\n        } catch (error) {\r\n            console.log(error)\r\n        }\r\n    }\r\n\r\n    getProperties()\r\n})()\n\n//# sourceURL=webpack://bienesraices/./src/js/mapStart.js?");
 
 /***/ })
 
