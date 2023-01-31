@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 
 import UserRoutes from './routes/UserRoutes.js'
 import PropertieRoutes from './routes/PropertiesRoutes.js'
+import AppRoutes from './routes/AppRoutes.js'
 
 import db from './config/db.js'
 
@@ -42,6 +43,7 @@ app.use(express.static('public'))
 
 
 // Routing
+app.use('/', AppRoutes)
 app.use('/auth', UserRoutes)
 app.use('/', PropertieRoutes)
 
