@@ -1,6 +1,8 @@
 
 const start = (req,res) => {
-    res.send('Inicio')
+    res.render('start',{
+        pageLabel:'Inicio'
+    })
 }
 
 const category = (req,res) => {
