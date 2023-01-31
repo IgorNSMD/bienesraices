@@ -7,6 +7,8 @@ import cookieParser from 'cookie-parser'
 import UserRoutes from './routes/UserRoutes.js'
 import PropertieRoutes from './routes/PropertiesRoutes.js'
 import AppRoutes from './routes/AppRoutes.js'
+import ApiRoutes from './routes/ApiRoutes.js'
+
 
 import db from './config/db.js'
 
@@ -46,7 +48,7 @@ app.use(express.static('public'))
 app.use('/', AppRoutes)
 app.use('/auth', UserRoutes)
 app.use('/', PropertieRoutes)
-
+app.use('/api', ApiRoutes)
 
 
 const port = process.env.PORT || 3000;
