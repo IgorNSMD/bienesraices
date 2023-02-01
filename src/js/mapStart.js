@@ -53,6 +53,10 @@
 
     const showProperties = properties => {
         //console.log(properties)
+
+        // Limpiar los markers previamente
+        markers.clearLayers()
+
         properties.forEach(property => {
             
             //console.log(property)
@@ -76,7 +80,8 @@
     const filterProperties = () => {
         // console.log(properties)
         const result = properties.filter(filterCategorie).filter(filterPrice)
-        console.log(result)
+        showProperties(result)
+        //console.log(result)
     }
 
     const filterCategorie = property => {
