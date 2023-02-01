@@ -6,17 +6,42 @@
     const map = L.map('map-start').setView([lat, lng ], 16);
 
     let markers = new L.FeatureGroup().addTo(map)
+    let properties = [];
+
+    // Filters
+    const filters = {
+        category: '',
+        price:''
+    }
+
+    const categoriesSelect = document.querySelector('#categories')
+    const pricesSelect = document.querySelector('#prices')
+
+
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);    
+
+    // Filtrado de categorias y precios
+    categoriesSelect.addEventListener('change', e => {
+        //console.log(e.target.value)
+        filters.category = +e.target.value
+        filterProperties()
+    })
+
+    pricesSelect.addEventListener('change', e => {
+        //console.log(e.target.value)
+        filters.price = +e.target.value
+        filterProperties()
+    })
 
     const getProperties = async(req,res) => {
         try {
 
             const url = '/api/properties'
             const response = await fetch(url)
-            const properties = await response.json()
+            properties = await response.json()
 
             showProperties(properties)
             
@@ -30,7 +55,7 @@
         //console.log(properties)
         properties.forEach(property => {
             
-            console.log(property)
+            //console.log(property)
 
             // Agregar los pines
             const marker = new L.marker([property?.lat, property?.lng], {
@@ -47,6 +72,21 @@
 
             markers.addLayer(marker)
         });
+    }
+    const filterProperties = () => {
+        // console.log(properties)
+        const result = properties.filter(filterCategorie).filter(filterPrice)
+        console.log(result)
+    }
+
+    const filterCategorie = property => {
+        // console.log(property)
+        return filters.category ? property.categoryid === filters.category : property
+    }
+
+    const filterPrice = property => {
+        // console.log(property)
+        return filters.price ? property.priceid === filters.price : property
     }
 
     getProperties()

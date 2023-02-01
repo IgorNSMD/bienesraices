@@ -576,6 +576,9 @@ video {
 .w-6 {
   width: 1.5rem;
 }
+.w-24 {
+  width: 6rem;
+}
 .max-w-md {
   max-width: 28rem;
 }
@@ -767,6 +770,10 @@ video {
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+}
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 .text-center {
   text-align: center;
@@ -980,6 +987,10 @@ video {
 
   .md\:w-2\/3 {
     width: 66.666667%;
+  }
+
+  .md\:w-auto {
+    width: auto;
   }
 
   .md\:grid-cols-2 {

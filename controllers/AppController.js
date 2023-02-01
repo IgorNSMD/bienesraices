@@ -7,7 +7,7 @@ const start = async (req,res) => {
         Price.findAll({ raw: true })
     ])
 
-    console.log( categories )
+   // console.log( categories )
 
     res.render('start',{
         pageLabel:'Inicio',
