@@ -775,6 +775,9 @@ video {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 }
+.pt-10 {
+  padding-top: 2.5rem;
+}
 .text-center {
   text-align: center;
 }
