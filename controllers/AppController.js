@@ -1,3 +1,4 @@
+import { Sequelize } from 'sequelize'
 import { Price, Category, Property } from '../model/index.js'
 
 const start = async (req,res) => {
@@ -81,8 +82,27 @@ const notfound = (req,res) => {
     })
 }
 
-const search = (req,res) => {
+const search = async(req,res) => {
+    const { filter } = req.body
 
+    // Validar que termino no esté vacio
+    if(!filter.trim()){
+        return res.redirect('back')
+    }
+
+    // Consultar las propiedades
+    const properties = await Property.findAll({
+        where: {
+            title: {
+                [Sequelize.Op.like]: '%' + filter + '%'
+            }
+        },
+        include: [
+            { model: Price, as: 'price' }
+        ]
+    })
+
+    console.log(properties)
 }
 
 export {

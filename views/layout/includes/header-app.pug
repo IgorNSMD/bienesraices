@@ -19,6 +19,6 @@ div(class="bg-indigo-700 py-5 hidden lg:block")
 
         form(action="/search" method="POST" class="flex gap-3 items-center")
             input(type="hidden" name="_csrf" value= csrfToken )
-            label(for="finish" class="text-sm uppercase font-bold text-white") Busqueda
-            input(type="text" id="finish" name="finish" placeholder="Buscar propiedad..." class="p-2 rounded-lg shadow text-sm")
+            label(for="filter" class="text-sm uppercase font-bold text-white") Busqueda
+            input(type="text" id="filter" name="filter" placeholder="Buscar propiedad..." class="p-2 rounded-lg shadow text-sm")
             input(type="submit" class="bg-indigo-800 hover:bg-indigo-400 rounded-lg text-white uppercase font-bold p-2 cursor-pointer text-sm" value="Buscar")
