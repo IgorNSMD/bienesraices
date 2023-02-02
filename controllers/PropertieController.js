@@ -372,6 +372,7 @@ const showProperty = async(req,res) => {
     res.render('properties/showProperty',{
         property,
         pageLabel: property.title,
+        csrfToken: req.csrfToken(),
     })
 
 

@@ -39,7 +39,8 @@ const start = async (req,res) => {
 
     res.render('start',{
         pageLabel:'Inicio',
-        categories, prices, houses, departments
+        categories, prices, houses, departments,
+        csrfToken: req.csrfToken(),
     })
 }
 
@@ -68,12 +69,16 @@ const category = async (req,res) => {
 
     res.render('category',{
         pageLabel: `${ category.name }s En venta `,
-        properties
+        properties,
+        csrfToken: req.csrfToken(),
     })
 }
 
 const notfound = (req,res) => {
-
+    res.render('404',{
+        pageLabel: 'No encontrada',
+        csrfToken: req.csrfToken(),
+    })
 }
 
 const search = (req,res) => {
