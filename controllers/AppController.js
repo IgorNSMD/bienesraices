@@ -102,7 +102,12 @@ const search = async(req,res) => {
         ]
     })
 
-    console.log(properties)
+    //console.log(properties)
+    res.render('search', {
+        pageLabel: 'Resultado de la busqueda',
+        csrfToken: req.csrfToken(),
+        properties
+    })
 }
 
 export {
