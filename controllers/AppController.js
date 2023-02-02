@@ -43,8 +43,33 @@ const start = async (req,res) => {
     })
 }
 
-const category = (req,res) => {
+const category = async (req,res) => {
+    const { id } = req.params
+    
+    //console.log( id )
 
+    // Comprobar que la categoría existe
+    const category = await Category.findByPk(id)
+    if(!category){
+        return res.redirect('/404')
+    }
+
+
+    // Obtener las propiedades
+    const properties = await Property.findAll({
+        where: {
+            categoryid: id
+        },
+        include:[
+            {model: Price, as: 'price'}
+
+        ]
+    })
+
+    res.render('category',{
+        pageLabel: `${ category.name }s En venta `,
+        properties
+    })
 }
 
 const notfound = (req,res) => {
