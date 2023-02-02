@@ -6,7 +6,7 @@ import { admin,create,save,addImage, saveFile,edit, saveChange, remove, showProp
 
 import protectRoute from '../middleware/protectRoute.js';
 import fileUpload from '../middleware/fileUpload.js'
-
+import IdentifyUser from '../middleware/identifyUser.js'
 
 const router = express.Router();
 
@@ -51,6 +51,10 @@ router.post('/properties/edit/:id', protectRoute,
 
 router.post('/properties/remove/:id', protectRoute, remove)
 
-router.get('/property/:id', showProperty)
+//Area Publica
+router.get('/property/:id', 
+    IdentifyUser,
+    showProperty
+    )
 
 export default router

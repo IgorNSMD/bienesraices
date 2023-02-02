@@ -356,6 +356,8 @@ const showProperty = async(req,res) => {
 
     const { id } = req.params
 
+    console.log(req.user)
+
     // Validar que la propuiedad exista
     const property = await Property.findByPk(id, {
         include: [
@@ -373,6 +375,7 @@ const showProperty = async(req,res) => {
         property,
         pageLabel: property.title,
         csrfToken: req.csrfToken(),
+        user:req.user
     })
 
 
