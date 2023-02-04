@@ -79,6 +79,12 @@ const postAuthenticate = async(req,res) => {
     }).redirect('/my-properties')
 }
 
+const postSignOut = async(req,res) => {
+    //res.send('Cerrando sesión...')
+    return res.clearCookie('_token').status(200).redirect('/auth/login')
+} 
+
+
 const getRegister =(req,res) =>{
 
     //console.log( req.csrfToken() )
@@ -335,6 +341,7 @@ const postNewPassword = async(req,res) => {
 export {
     getLogin,
     postAuthenticate,
+    postSignOut,
     getRegister,
     postRegister,
     getConfirm,

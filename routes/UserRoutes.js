@@ -1,11 +1,14 @@
 import express from 'express'
-import {getLogin, postAuthenticate, getRegister, postRegister, getConfirm, getRecoverPassword, postResetPassword,
+import {getLogin, postAuthenticate, postSignOut, getRegister, postRegister, getConfirm, getRecoverPassword, postResetPassword,
         getCheckToken, postNewPassword} from '../controllers/UserController.js'
 
 const router = express.Router();
 
 router.get('/login', getLogin)
 router.post('/login', postAuthenticate)
+
+// Cerrar Sesión
+router.post('/signout', postSignOut)
 
 router.get('/register', getRegister )
 
