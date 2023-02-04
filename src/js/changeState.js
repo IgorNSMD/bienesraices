@@ -21,7 +21,11 @@
                 }
             })
     
-            console.log(resp)            
+                    
+            const result = await resp.json()
+
+            console.log(result)    
+
         } catch (error) {
             console.log(error)    
         }

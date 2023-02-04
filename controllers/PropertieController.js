@@ -356,7 +356,34 @@ const remove = async(req,res) => {
 // Modifica el estado de la propiedad
 
 const changeState = async(req,res) => {
-    console.log('cambiando estado...')
+    
+
+    const { id } = req.params
+
+    // Validar que la propuiedad exista
+    const property = await Property.findByPk(id)
+    if(!property){
+        return res.redirect('/my-properties')
+    }
+
+
+    // Validar que la propiedad pertenece a quien visita esta página
+    // console.log(req.user.id)
+    
+    console.log('property.userid = 1')
+
+    if(req.user.id.toString() !== property.userid.toString()){
+        return res.redirect('/my-properties')
+    }
+
+    //console.log('cambiando estado...')
+    property.published = !property.published
+
+    await property.save()
+
+    res.json({
+        res:'ok'
+    })
 }
 
 const showProperty = async(req,res) => {
