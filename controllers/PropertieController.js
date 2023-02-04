@@ -401,7 +401,7 @@ const showProperty = async(req,res) => {
         ]       
     })
     
-    if(!property){
+    if(!property || !property.published){
         return res.redirect('/404')
     }
 
