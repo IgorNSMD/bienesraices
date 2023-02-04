@@ -2,7 +2,7 @@
 import express from 'express'
 import { body } from 'express-validator'
 
-import { admin,create,save,addImage, saveFile,edit, saveChange, remove, showProperty } from '../controllers/PropertieController.js'
+import { admin,create,save,addImage, saveFile,edit, saveChange, remove, showProperty,sendMesage } from '../controllers/PropertieController.js'
 
 import protectRoute from '../middleware/protectRoute.js';
 import fileUpload from '../middleware/fileUpload.js'
@@ -56,5 +56,13 @@ router.get('/property/:id',
     IdentifyUser,
     showProperty
     )
+
+// Almacenar los mensajes
+router.post('/property/:id', 
+    IdentifyUser,
+    body('message').isLength({min:5}).withMessage('El mensaje no puede ir vacio o es muy corto'),
+    sendMesage
+    )
+
 
 export default router

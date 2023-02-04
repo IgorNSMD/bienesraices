@@ -357,7 +357,7 @@ const showProperty = async(req,res) => {
 
     const { id } = req.params
 
-    console.log(req.user)
+    //console.log(req.user)
 
     // Validar que la propuiedad exista
     const property = await Property.findByPk(id, {
@@ -384,6 +384,49 @@ const showProperty = async(req,res) => {
 
 }
 
+const sendMesage = async(req,res) => {
+    const { id } = req.params
+
+    // Validar que la propuiedad exista
+    const property = await Property.findByPk(id, {
+        include: [
+            { model: Category, as: 'category' },
+            { model: Price, as: 'price' }
+        ]       
+    })
+    
+    if(!property){
+        return res.redirect('/404')
+    }
+
+    // Renderizar los errores que se encuentren
+    // Validacion
+    let result = validationResult(req)
+
+    // verificar result esté vacio
+    if(!result.isEmpty()){
+        // Modelo de precios y categorias
+        return res.render('properties/showProperty',{
+            property,
+            pageLabel: property.title,
+            csrfToken: req.csrfToken(),
+            user:req.user,
+            esVendedor: esVendedor(req.user?.id, property.userid ),
+            errors: result.array(), 
+        })
+    }
+
+    res.render('properties/showProperty',{
+        property,
+        pageLabel: property.title,
+        csrfToken: req.csrfToken(),
+        user:req.user,
+        esVendedor: esVendedor(req.user?.id, property.userid )
+    })
+
+
+}
+
 export {
     admin,
     create,
@@ -393,5 +436,6 @@ export {
     edit,
     saveChange,
     remove,
-    showProperty
+    showProperty,
+    sendMesage
 }
