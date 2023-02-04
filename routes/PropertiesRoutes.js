@@ -2,7 +2,8 @@
 import express from 'express'
 import { body } from 'express-validator'
 
-import { admin,create,save,addImage, saveFile,edit, saveChange, remove, showProperty,sendMesage, seeMessages } from '../controllers/PropertieController.js'
+import { admin,create,save,addImage, saveFile,edit, saveChange, remove, changeState, 
+    showProperty,sendMesage, seeMessages } from '../controllers/PropertieController.js'
 
 import protectRoute from '../middleware/protectRoute.js';
 import fileUpload from '../middleware/fileUpload.js'
@@ -51,6 +52,7 @@ router.post('/properties/edit/:id', protectRoute,
 
 router.post('/properties/remove/:id', protectRoute, remove)
 
+router.put('/properties/changeState/:id', protectRoute, changeState)
 //Area Publica
 router.get('/property/:id', 
     IdentifyUser,

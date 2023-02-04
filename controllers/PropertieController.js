@@ -353,6 +353,12 @@ const remove = async(req,res) => {
     
 }
 
+// Modifica el estado de la propiedad
+
+const changeState = async(req,res) => {
+    console.log('cambiando estado...')
+}
+
 const showProperty = async(req,res) => {
     //res.send('mostrando titulo...')
 
@@ -490,6 +496,7 @@ export {
     edit,
     saveChange,
     remove,
+    changeState,
     showProperty,
     sendMesage,
     seeMessages
