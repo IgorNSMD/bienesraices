@@ -38,7 +38,8 @@ const admin = async(req,res) => {
                 ,
                 include: [
                     { model: Category, as: 'category' },
-                    { model: Price, as: 'price' }
+                    { model: Price, as: 'price' },
+                    { model: Message, as: 'messages' }
                 ]
             }),
             Property.count({
