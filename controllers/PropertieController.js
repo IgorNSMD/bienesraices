@@ -447,7 +447,34 @@ const sendMesage = async(req,res) => {
 }
 
 const seeMessages = async(req,res) => {
-    res.send('Mensajes..')
+
+    //res.send('Mensajes..')
+    const { id } = req.params
+
+    // Validar que la propuiedad exista
+    const property = await Property.findByPk(id,{
+        include: [
+            { model: Message, as: 'messages' }
+        ]
+    })
+    if(!property){
+        return res.redirect('/my-properties')
+    }
+
+
+    // Validar que la propiedad pertenece a quien visita esta página
+    // console.log(req.user.id)
+    
+    console.log('property.userid = 1')
+
+    if(req.user.id.toString() !== property.userid.toString()){
+        return res.redirect('/my-properties')
+    }
+
+    res.render('properties/messages',{
+        pageLabel: 'Mensajes',
+        messages: property.messages,
+    })
 }
 
 export {
