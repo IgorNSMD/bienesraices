@@ -2,6 +2,7 @@ import { unlink } from 'node:fs/promises'
 import { validationResult } from 'express-validator'
 
 import { Price,Category, Property } from '../model/index.js'
+import { esVendedor } from '../helpers/index.js'
 
 // import Price from '../model/Price.js'
 // import Category from '../model/Category.js'
@@ -370,12 +371,14 @@ const showProperty = async(req,res) => {
         return res.redirect('/404')
     }
 
+    // console.log( esVendedor(req.user?.id, property.userid ) )
 
     res.render('properties/showProperty',{
         property,
         pageLabel: property.title,
         csrfToken: req.csrfToken(),
-        user:req.user
+        user:req.user,
+        esVendedor: esVendedor(req.user?.id, property.userid )
     })
 
 
