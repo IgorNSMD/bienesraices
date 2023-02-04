@@ -445,6 +445,10 @@ const sendMesage = async(req,res) => {
 
 }
 
+const seeMessages = async(req,res) => {
+    res.send('Mensajes..')
+}
+
 export {
     admin,
     create,
@@ -455,5 +459,6 @@ export {
     saveChange,
     remove,
     showProperty,
-    sendMesage
+    sendMesage,
+    seeMessages
 }

@@ -2,7 +2,7 @@
 import express from 'express'
 import { body } from 'express-validator'
 
-import { admin,create,save,addImage, saveFile,edit, saveChange, remove, showProperty,sendMesage } from '../controllers/PropertieController.js'
+import { admin,create,save,addImage, saveFile,edit, saveChange, remove, showProperty,sendMesage, seeMessages } from '../controllers/PropertieController.js'
 
 import protectRoute from '../middleware/protectRoute.js';
 import fileUpload from '../middleware/fileUpload.js'
@@ -64,5 +64,9 @@ router.post('/property/:id',
     sendMesage
     )
 
+router.get('/messages/:id',
+    protectRoute,
+    seeMessages
+)
 
 export default router
