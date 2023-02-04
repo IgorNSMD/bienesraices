@@ -2,7 +2,7 @@ import { unlink } from 'node:fs/promises'
 import { validationResult } from 'express-validator'
 
 import { Price,Category, Property, Message, User } from '../model/index.js'
-import { esVendedor } from '../helpers/index.js'
+import { esVendedor,formatDate } from '../helpers/index.js'
 
 // import Price from '../model/Price.js'
 // import Category from '../model/Category.js'
@@ -477,6 +477,7 @@ const seeMessages = async(req,res) => {
     res.render('properties/messages',{
         pageLabel: 'Mensajes',
         messages: property.messages,
+        formatDate,
     })
 }
 
